@@ -137,16 +137,29 @@ class XGBoost2Sql:
             self.code_str += res + '\n'
             return
         v = lines[0].strip()
-        start_index = v.find('[')
-        median_index = v.find('<')
-        end_index = v.find(']')
-        v_name = v[start_index + 1:median_index].strip()
-        v_value = v[median_index:end_index]
-        ynm = v[end_index + 1:].strip().split(',')
-        yes_v = int(ynm[0].replace('yes=', '').strip())
-        no_v = int(ynm[1].replace('no=', '').strip())
-        miss_v = int(ynm[2].replace('missing=', '').strip())
-        z_lines = lines[1:]
+        if ':{' in v:
+            start_index = v.find('[')
+            median_index = v.find(':{')
+            end_index = v.find(']')
+            v_name = v[start_index + 1:median_index].strip()
+            v_value = v[median_index + 1:end_index]
+            v_value = ' in ('+v_value[1:-1]+')'
+            ynm = v[end_index + 1:].strip().split(',')
+            yes_v = int(ynm[0].replace('yes=', '').strip())
+            no_v = int(ynm[1].replace('no=', '').strip())
+            miss_v = int(ynm[2].replace('missing=', '').strip())
+            z_lines = lines[1:]
+        else:
+            start_index = v.find('[')
+            median_index = v.find('<')
+            end_index = v.find(']')
+            v_name = v[start_index + 1:median_index].strip()
+            v_value = v[median_index:end_index]
+            ynm = v[end_index + 1:].strip().split(',')
+            yes_v = int(ynm[0].replace('yes=', '').strip())
+            no_v = int(ynm[1].replace('no=', '').strip())
+            miss_v = int(ynm[2].replace('missing=', '').strip())
+            z_lines = lines[1:]
 
         if is_right:
             format = '\t' * (n - 1)
@@ -156,7 +169,8 @@ class XGBoost2Sql:
             res = res + format + 'case when (' + v_name + v_value + ' or ' + v_name + ' is null' + ') then'
         else:
             format = '\t' * n
-            res = res + format + 'case when (' + v_name + v_value + ' and ' + v_name + ' is null' + ') then'
+            # res = res + format + 'case when (' + v_name + v_value + ' and ' + v_name + ' is null' + ') then'
+            res = res + format + 'case when (' + v_name + v_value + ' and ' + v_name + ' is not null' + ') then'
         self.code_str += res + '\n'
         left_right = self.get_tree_str(z_lines, yes_v, no_v)
 

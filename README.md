@@ -4,11 +4,7 @@
 
 ## 思想碰撞
 
-|  微信 |  微信公众号 |
-| :---: | :----: |
-| <img src="https://github.com/ZhengRyan/autotreemodel/blob/master/images/%E5%B9%B2%E9%A5%AD%E4%BA%BA.png" alt="RyanZheng.png" width="50%" border=0/> | <img src="https://github.com/ZhengRyan/autotreemodel/blob/master/images/%E9%AD%94%E9%83%BD%E6%95%B0%E6%8D%AE%E5%B9%B2%E9%A5%AD%E4%BA%BA.png" alt="魔都数据干饭人.png" width="50%" border=0/> |
-|  干饭人  | 魔都数据干饭人 |
-
+本项目fork来自ZhengRyan的优秀项目xgboost2sql，相关链接如下：
 
 > 仓库地址：https://github.com/ZhengRyan/xgboost2sql
 > 
@@ -16,7 +12,7 @@
 > 
 > pipy包：https://pypi.org/project/xgboost2sql/
 
-
+本项目在xgboost2sql的基础上，对value is missing的情况进行fix，此外扩充了xgboost有类别（category）作为模型输入时的2sql处理
 
 ## 环境准备
 可以不用单独创建虚拟环境，因为对包的依赖没有版本要求
