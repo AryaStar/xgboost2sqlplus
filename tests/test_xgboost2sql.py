@@ -6,7 +6,7 @@ import xgboost as xgb
 from sklearn.datasets import make_classification
 from sklearn.model_selection import train_test_split
 
-from xgboost2sql import XGBoost2Sql
+from xgboost2sqlplus import XGBoost2Sql
 
 X, y = make_classification(n_samples=10000,
                            n_features=10,
